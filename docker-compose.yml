@@ -4,6 +4,9 @@ services:
     container_name: backend
     ports:
       - "3000:3000"
+    networks:
+      - prod-green-net
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
@@ -14,4 +17,10 @@ services:
       - backend
     ports:
       - "5000:5000"
-   
+    networks:
+      - prod-green-net
+    restart: unless-stopped
+
+networks:
+  prod-green-net:
+    driver: bridge
