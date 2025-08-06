@@ -4,8 +4,7 @@ WORKDIR /archie
 
 ADD . .
 
-RUN pip install -r requirements.txt && \
-    apk add --no-cache curl
+RUN pip install -r requirements.txt
 
 EXPOSE 3000
 

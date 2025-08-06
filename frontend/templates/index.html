@@ -1,42 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Collab CI/CD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
     <h1>Collaborative CI/CD Pipeline</h1>
-    <p>Streamline your development workflow with automated testing, building, and deployment.</p>
+    <p>
+      Streamline your development workflow with automated testing, building, and
+      deployment.
+    </p>
     <p>This is the frontend</p>
     <p id="tools-list">Loading tools...</p>
+    <p>Debug: Backend URL is {{ backend_url }}</p>
     <script>
-        fetch('{{ backend_url }}/jet')
-            .then(response => response.json())
-            .then(tools => {
-                const toolsList = document.querySelectorAll('p');
-                toolsList[toolsList.length - 1].innerHTML = tools.join(', ');
-            })
-            .catch(error => {
-                const toolsList = document.querySelectorAll('p');
-                toolsList[toolsList.length - 1].innerHTML = 'Error loading tools';
-            });
+      console.log("Backend URL:", "{{ backend_url }}");
+      function fetchTools(retries = 3) {
+        console.log("Fetching from:", "{{ backend_url }}/jet");
+        fetch("{{ backend_url }}/jet")
+          .then((response) => {
+            if (!response.ok) throw new Error("Backend not ready");
+            return response.json();
+          })
+          .then((tools) => {
+            const toolsList = document.querySelectorAll("p");
+            toolsList[toolsList.length - 1].innerHTML = tools.join(", ");
+          })
+          .catch((error) => {
+            if (retries > 0) {
+              setTimeout(() => fetchTools(retries - 1), 2000);
+            } else {
+              const toolsList = document.querySelectorAll("p");
+              toolsList[toolsList.length - 1].innerHTML =
+                "Error loading tools: " + error.message;
+            }
+          });
+      }
+
+      setTimeout(fetchTools, 1000);
     </script>
-</body>
-<style>
+  </body>
+  <style>
     body {
-        background-color: black;
-        text-align: center;
-        font-size: larger;
+      background-color: black;
+      text-align: center;
+      font-size: larger;
     }
     h1 {
-        color: chartreuse;
-        margin-top: 50px;
-        font-size: larger;
+      color: chartreuse;
+      margin-top: 50px;
+      font-size: larger;
     }
     p {
-        color: darkgoldenrod;
-        font-size: x-large;
+      color: darkgoldenrod;
+      font-size: x-large;
     }
-</style>
+  </style>
 </html>
