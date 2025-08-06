@@ -1,0 +1,1 @@
+Tools = ["Docker", "Python-Flask", "AWS EC2", "Jenkins", "Git", "Terraform"]
