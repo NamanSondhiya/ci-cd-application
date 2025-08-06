@@ -4,6 +4,8 @@ services:
     container_name: backend
     ports:
       - "3000:3000"
+    networks:
+      - prod-green-net
 
   frontend:
     build: ./frontend
@@ -14,3 +16,9 @@ services:
       - backend
     ports:
       - "5000:5000"
+    networks:
+      - prod-green-net
+
+networks:
+  prod-green-net:
+    driver: bridge
