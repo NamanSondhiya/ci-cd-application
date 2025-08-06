@@ -4,15 +4,13 @@ services:
     container_name: backend
     ports:
       - "3000:3000"
-    
+
   frontend:
     build: ./frontend
     container_name: frontend
+    environment:
+      - BACKEND_URL=http://backend:3000
     depends_on:
       - backend
     ports:
       - "5000:5000"
-    environment:
-      - BACKEND_URL=http://backend:3000
-    
-   
