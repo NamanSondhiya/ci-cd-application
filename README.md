@@ -12,6 +12,11 @@ Full-stack application with Docker and GitHub Actions CI/CD.
 
 ## Usage
 ```bash
+# Clone the repository
+git clone git@github.com:SillyCookies-s/ci-cd-application.git
+cd ci-cd-application
+
+# Run with Docker Compose
 docker-compose up -d
 ```
 
