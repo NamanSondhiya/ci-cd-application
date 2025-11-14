@@ -3,9 +3,13 @@ pipeline {
     
     triggers {
         pollSCM('* * * * *')
-        githubPush()
+        // githubPush
     }
     
+    parameters {
+        booleanParam(name: 'STOP', defaultValue: false, description: 'Stop the application after deployment')
+    }
+
     stages {
         stage('Code Clone from Github') {
             steps {
@@ -21,8 +25,26 @@ pipeline {
                     sh 'docker compose down || true'
                     sh 'docker compose up --build -d'
                 }
-                sh 'docker logout || true'
             }
+        }
+
+        stage('Auto Stop') {
+            when {
+                params.STOP == true
+            }
+            steps {
+                echo 'Application will run for a minutes before stopping...'
+                sleep time: 1, unit: 'MINUTES'
+                sh 'docker compose down'
+                echo 'Application stopped after a minutes'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+            sh 'docker logout || true'
         }
     }
 }
