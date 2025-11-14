@@ -1,29 +1,53 @@
 # CI/CD Application
 
-Hey there! Welcome to my full-stack application, now streamlined with Docker and Jenkins for reliable CI/CD. I'm excited to share the latest enhancements that make deployment a breeze.
+Full-stack application with automated CI/CD pipeline using Jenkins and Docker.
 
-## Recent Updates
-- **Jenkins Integration**: Switched to Jenkins for automated builds, testing, and deployments via the included Jenkinsfile. It polls for changes and deploys seamlessly using Docker Compose.
-- **Repository URL Update**: Updated clone URL to the correct repository for easier access.
+## Architecture
+- **Frontend**: Flask (Port 5000)
+- **Backend**: Python (Port 3000)
+- **CI/CD**: Jenkins with Docker Compose
+- **Containerization**: Docker
 
-## Structure
-- Frontend: Flask (Port 5000)
-- Backend: Python (Port 3000)
+## Quick Start
 
-## Branches
-- `Master`: Base application
-- `master02`: With GitHub Actions (legacy setup)
+### Prerequisites
+- Docker & Docker Compose
+- Jenkins (for CI/CD)
+- Git
 
-## Usage
+**Automated Setup**: Use [shell-scripts repository](https://github.com/NamanSondhiya/shell-scripts.git) for automated installation of Docker, Docker Compose, and Jenkins on new machines.
+
+### Local Development
 ```bash
-# Clone the repository
 git clone https://github.com/NamanSondhiya/ci-cd-application.git
 cd ci-cd-application
-
-# Run with Docker Compose
 docker-compose up -d
 ```
 
-## Access
+### Jenkins Setup
+1. **Configure Credentials**:
+   - Add Docker Hub credentials with ID: `dockerhub-creds`
+   - Username/Password or Personal Access Token
+
+2. **Create Pipeline Job**:
+   - New Item → Pipeline
+   - Pipeline script from SCM
+   - Repository URL: `https://github.com/NamanSondhiya/ci-cd-application.git`
+   - Branch: `Master`
+
+3. **Pipeline Parameters**:
+   - `STOP`: Boolean (default: false) - Auto-stop after 1 minute
+
+### Pipeline Features
+- **Auto-polling**: Checks for changes every minute
+- **Webhook support**: GitHub push triggers
+- **Controlled deployment**: Optional auto-stop functionality
+- **Secure credentials**: Masked Docker Hub authentication
+
+## Access Points
 - Frontend: http://localhost:5000
 - Backend: http://localhost:3000
+
+## Usage Modes
+- **Continuous**: Set `STOP=false` for persistent deployment
+- **Testing**: Set `STOP=true` for 1-minute temporary deployment
