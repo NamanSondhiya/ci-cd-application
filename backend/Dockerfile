@@ -1,4 +1,4 @@
-FROM python:3.14.0rc1-alpine3.22
+FROM python:3.15.0a1-alpine3.22
 
 WORKDIR /archie
 
