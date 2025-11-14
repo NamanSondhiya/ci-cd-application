@@ -16,6 +16,7 @@ pipeline {
         
         stage('Deploy') {
             steps {
+                sh 'docker login' 
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
             }
