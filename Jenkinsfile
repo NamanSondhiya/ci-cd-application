@@ -3,7 +3,7 @@ pipeline {
     
     triggers {
         pollSCM('* * * * *')
-        // githubPush
+        // githubPush()
     }
     
     parameters {
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Auto Stop') {
             when {
-                params.STOP == true
+                expression { params.STOP }
             }
             steps {
                 echo 'Application will run for a minutes before stopping...'
