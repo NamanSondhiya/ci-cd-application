@@ -16,9 +16,10 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                sh 'docker login' 
-                sh 'docker compose down || true'
-                sh 'docker compose up --build -d'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'docker compose down || true'
+                    sh 'docker compose up --build -d'
+                }
             }
         }
     }
