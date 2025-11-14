@@ -7,11 +7,10 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
+        stage('Code Clone from Github') {
             steps {
-                git branch: 'Master',
-                    credentialsId: 'SillyCookies-s/**************************', 
-                    url: 'https://github.com/SillyCookies-s/ci-cd-application.git'
+                git url: "https://github.com/NamanSondhiya/ci-cd-application.git", branch: "Master"
+                echo "Code Clonned Successfully"    
             }
         }
         
