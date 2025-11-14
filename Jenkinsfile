@@ -21,6 +21,7 @@ pipeline {
                     sh 'docker compose down || true'
                     sh 'docker compose up --build -d'
                 }
+                sh 'docker logout || true'
             }
         }
     }
